@@ -1,24 +1,31 @@
-# .github/.github/workflows/tag-guard.yml
-name: tag-guard                       # ← this becomes the status‑check name
+# .github/.github/workflows/validate-tag-base.yml  (org meta‑repo)
+name: Validate Tag
 on:
+  pull_request:
   workflow_call:
-    inputs:
-      base_branch:
-        type: string
-        required: true
 
 jobs:
-  verify-ancestor:
+  validate-tag:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }      # need full history for merge‑base
-      - name: Fail if tag commit is NOT on main
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch Default Branch
         run: |
-          set -e
-          git fetch origin ${{ inputs.base_branch }}
-          if git merge-base --is-ancestor origin/${{ inputs.base_branch }} ${{ github.sha }}; then
-            echo "✅ Commit is already on ${{ inputs.base_branch }}"
+          echo "Default branch is ${{ github.event.repository.default_branch }}"
+          git fetch origin ${{ github.event.repository.default_branch }}
+
+      - name: Validate Commit
+        run: |
+          BASE=${{ github.event.repository.default_branch }}
+          SHA=${{ github.sha }}
+
+          if git merge-base --is-ancestor $SHA  origin/$BASE; then
+            echo "✅ Commit $SHA is in $BASE."
           else
-            echo "❌ Commit is NOT on ${{ inputs.base_branch }}"; exit 1
+            echo "::error title=Tag Validation Failed::Commit $SHA is NOT in $BASE."
+            exit 1
           fi
