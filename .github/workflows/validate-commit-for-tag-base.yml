@@ -1,11 +1,14 @@
 # .github/.github/workflows/validate-tag-base.yml  (org meta‑repo)
-name: Validate Tag
+name: Validate Commit For Tag Base
+
+permissions:
+  contents: read
+  
 on:
-  pull_request:
   workflow_call:
 
 jobs:
-  validate-tag:
+  validate-commit-for-tag-base:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,7 +21,7 @@ jobs:
           echo "Default branch is ${{ github.event.repository.default_branch }}"
           git fetch origin ${{ github.event.repository.default_branch }}
 
-      - name: Validate tagged commit
+      - name: Validate commit for tag
         run: |
           BASE=${{ github.event.repository.default_branch }}
           SHA=${{ github.sha }}
