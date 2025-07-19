@@ -3,6 +3,7 @@ name: Validate Tag
 on:
   push:
     tags: ["*"] 
+  pull_request:
   workflow_call:
 
 jobs:
