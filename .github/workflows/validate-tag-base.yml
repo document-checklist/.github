@@ -8,17 +8,17 @@ jobs:
   validate-tag:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Fetch Default Branch
+      - name: Fetch default branch
         run: |
           echo "Default branch is ${{ github.event.repository.default_branch }}"
           git fetch origin ${{ github.event.repository.default_branch }}
 
-      - name: Validate Commit
+      - name: Validate tagged commit
         run: |
           BASE=${{ github.event.repository.default_branch }}
           SHA=${{ github.sha }}
@@ -26,6 +26,6 @@ jobs:
           if git merge-base --is-ancestor $SHA  origin/$BASE; then
             echo "✅ Commit $SHA is in $BASE."
           else
-            echo "::error title=Tag Validation Failed::Commit $SHA is NOT in $BASE."
+            echo "::error title=Tag validation dailed::Commit $SHA is NOT in $BASE."
             exit 1
           fi
