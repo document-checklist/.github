@@ -1,6 +1,8 @@
 # .github/.github/workflows/validate-tag-base.yml  (org meta‑repo)
 name: Validate Tag
 on:
+  push:
+    tags: ["*"] 
   workflow_call:
 
 jobs:
