@@ -1,0 +1,8 @@
+{
+    "name": "Validate Commit For Tag Workflow",
+    "description": "Workflow that creates a check status for commits pushed to the default branch of a repository so that they are eligible for tagging.",
+    "iconName": "check-circle-fill-12",
+    "categories": [
+        "Continuous integration"
+    ]
+}
