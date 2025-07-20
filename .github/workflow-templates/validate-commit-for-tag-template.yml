@@ -1,0 +1,12 @@
+name: Validate Commit For Tag
+
+permissions:
+  contents: read 
+  
+on:
+  push:
+    branches: [$default-branch]  
+
+jobs:
+  validate-commit-for-tag:
+    uses: document-checklist/.github/.github/workflows/validate-commit-for-tag-base.yml@main
