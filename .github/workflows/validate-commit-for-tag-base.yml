@@ -1,4 +1,4 @@
-# .github/.github/workflows/validate-tag-base.yml  (org meta‑repo)
+# .github/.github/workflows/validate-commit-for-tag-base.yml  (org meta‑repo)
 name: Validate Commit For Tag Base
 
 permissions:
@@ -29,6 +29,6 @@ jobs:
           if git merge-base --is-ancestor $SHA  origin/$BASE; then
             echo "✅ Commit $SHA is in $BASE."
           else
-            echo "::error title=Tag validation dailed::Commit $SHA is NOT in $BASE."
+            echo "::error title=Tag validation ailed::Commit $SHA is NOT in $BASE."
             exit 1
           fi
